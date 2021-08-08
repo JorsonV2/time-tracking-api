@@ -21,13 +21,13 @@ API has also some implemented jest tests:
 
 I will provide a description for non basic NestJS project futures.
 
-### Methods
+## Methods
 
 ###  1. create task
   
   Used for creating new task.
   
-  ### Request
+  ####  Request
   
   Method | URL
   -------|-----
@@ -38,7 +38,7 @@ I will provide a description for non basic NestJS project futures.
   POST | name | string
   POST | start_date | string (ISO8601 format)
   
-  ### Response
+  ####  Response
   
   If creating the task went successfully:
 ``` markdown
@@ -71,7 +71,7 @@ I will provide a description for non basic NestJS project futures.
   
   Used for stopping currently active task.
   
-  ### Request
+  ####  Request
   
   Method | URL
   -------|-----
@@ -81,7 +81,7 @@ I will provide a description for non basic NestJS project futures.
   -----|--------|--------
   PATCH | end_date | string (ISO8601 format)
   
-  ### Response
+  ####  Response
   
   If stopping of task went successfully :
 ```markdown
@@ -113,13 +113,13 @@ If ```start_date``` of that task is greater than its ```end_date```:
   
   Used for getting currently active task.
   
-  ### Request
+  ####  Request
   
   Method | URL
   -------|-----
   GET | api/tasks
   
-  ### Response
+  ####  Response
   
   If there is a currently active task:
 ```markdown
