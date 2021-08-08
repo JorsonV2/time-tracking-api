@@ -10,7 +10,7 @@ require('dotenv').config();
         port: parseInt(process.env.DB_PORT),
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
-        database: 'tasks',
+        database: process.env.DB_DATABASE,
         entities: [Task],
         synchronize: true
     })]
