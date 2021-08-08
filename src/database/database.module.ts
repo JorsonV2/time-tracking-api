@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from 'src/tasks/entities/task.entity';
+require('dotenv').config();
 
 @Module({
     imports: [TypeOrmModule.forRoot({
@@ -9,7 +10,7 @@ import { Task } from 'src/tasks/entities/task.entity';
         port: parseInt(process.env.DB_PORT),
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
-        database: process.env.DB_DATABASE,
+        database: 'tasks',
         entities: [Task],
         synchronize: true
     })]
