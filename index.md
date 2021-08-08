@@ -1,37 +1,141 @@
-## Welcome to GitHub Pages
+# Time tracking API as a recruitment task
 
-You can use the [editor on GitHub](https://github.com/JorsonV2/time-tracking-api/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+API created with NestJS - it uses a PostreSQL Database for storing tracking data.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Requirenments
 
-### Markdown
+API whas meant to meet those requirenments:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- As a user, I want to be able to start tracking the new, named Task so that tracking of previously started task is stopped, and start time of the new Task is saved.
+- As a user, I want to be able to stop tracking task at any moment so that the task finish time is saved.
+- As a user, I want to be able to fetch current running task.
 
+No authorization or authentication provided. API is meant for one user.
+
+API has also some implemented jest tests:
+
+![image](https://user-images.githubusercontent.com/38647517/128626888-955c67cc-35ee-447a-9087-d64a8ee3dbe0.png)
+      ![image](https://user-images.githubusercontent.com/38647517/128626923-24cd701b-26ea-4fc5-926e-58b8430badbd.png)
+
+## API Documentation
+
+I will provide a description for non basic NestJS project futures.
+
+### Methods
+
+###  1. create task
+  
+  Used for creating new task.
+  
+  ### Request
+  
+  Method | URL
+  -------|-----
+  POST | api/tasks
+  
+  Type | Params | Values
+  -----|--------|--------
+  POST | name | string
+  POST | start_date | string (ISO8601 format)
+  
+  ### Response
+  
+  If creating the task went successfully:
+``` markdown
+{ 
+  "id": <task_id>,
+  "name": <task_name>,
+  "start_date": <task start date>,
+  "end_date": null
+  }
+```
+  
+  If ```start_date``` of not ended task is greater than ```start_date``` of new task:
+  ```markdown
+  null
+  ```
+  
+  If parameters are not in proper format:
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+{
+  "statusCode": 400,
+  "message": [
+    "Name must be a string.",
+    "start_date must be a valid ISO 8601 date string"
+  ],
+  "error": "Bad Request"
+}
+```
+  
+###  2. stop task
+  
+  Used for stopping currently active task.
+  
+  ### Request
+  
+  Method | URL
+  -------|-----
+  PATCH | api/tasks
+  
+  Type | Params | Values
+  -----|--------|--------
+  PATCH | end_date | string (ISO8601 format)
+  
+  ### Response
+  
+  If stopping of task went successfully :
+```markdown
+{ 
+  "id": <task_id>,
+  "name": <task_name>,
+  "start_date": <task start date>,
+  "end_date": <tasks end date>
+}
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+If ```start_date``` of that task is greater than its ```end_date```:
+  ```markdown
+  null
+  ```
+  
+  If parameters are not in proper format:
+```markdown  
+{
+  "statusCode": 400,
+  "message": [
+    "end_date must be a valid ISO 8601 date string"
+  ],
+  "error": "Bad Request"
+}
+```
+  
+###  2. get active task
+  
+  Used for getting currently active task.
+  
+  ### Request
+  
+  Method | URL
+  -------|-----
+  GET | api/tasks
+  
+  ### Response
+  
+  If there is a currently active task:
+```markdown
+{ 
+  "id": <task_id>,
+  "name": <task_name>,
+  "start_date": <task start date>,
+  "end_date": null
+}
+```
 
-### Jekyll Themes
+If there is not a currently active task:
+  ```markdown
+  null
+  ```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/JorsonV2/time-tracking-api/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Summary
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+It was my fist expiriance in creating tests in NestJS and writing an documentation. I hope it will be usefull in some way :)
