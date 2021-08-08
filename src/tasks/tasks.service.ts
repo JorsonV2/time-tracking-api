@@ -28,10 +28,11 @@ export class TasksService {
 
     if (active_task) {
 
-      //throw error when new tasks start time is before start time of active task
+      //return null when new tasks start time is before start time of active task
       if (new_task.start_date <= active_task.start_date)
-        throw new Error(`New task can't start before or at the same time as active task.`)
-      
+        //throw new Error(`New task can't start before or at the same time as active task.`)
+        return null;
+
       active_task.end_date = new_task.start_date;
 
       await this.tasksRepository.save(active_task);
@@ -68,9 +69,10 @@ export class TasksService {
     if (active_task) {
       active_task.end_date = new Date(stopTaskDto.end_date);
 
-      //throw error when new tasks start time is before start time of active task
+      //return when new tasks start time is before start time of active task
       if (active_task.start_date >= active_task.end_date)
-        throw new Error(`Tasks end date can't be before or at the same time as the start date.`)
+        //throw new Error(`Tasks end date can't be before or at the same time as the start date.`)
+        return null;
 
       return await this.tasksRepository.save(active_task)
 
